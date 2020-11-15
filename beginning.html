@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hylharec - Beginning</title>
+    <link rel="stylesheet" type="text/css" href="index_style.css">
+    <link rel="icon" href="/favicon.ico">
+  </head>
+  <body>
+    <div>
+      <h2>Choose your tale</h2>
+      <ul>
+            <li> <a id="link1" href="beginning.html">Le petit Souze</a>
+            <li> <a id="link2" href="beginning.html">Jusqu'au printemps</a>
+            <li> <a id="link3" href="beginning.html">Tisser une toile pour se protéger du froid</a>
+      </ul>  
+    </div>
+    
+    <!-- We will put our React component inside this div. -->
+    <div id="like_button_container"></div>
+
+    <!-- Load React. -->
+    <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+
+    <!-- Load our React component. -->
+    <script src="like_button.js"></script>
+
+  </body>
+</html>
