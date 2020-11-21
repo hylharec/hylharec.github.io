@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
     <head>
-        <meta charset="UTF-8" />
+        <meta charset="utf-8" />
         <title>Hylharec - Le Petit Souze</title>
         <link rel="stylesheet" type="text/css" href="styles/style.css">
-        <link rel="stylesheet" type="text/css" href="styles/petit_souze_style.css">
+        <link rel="stylesheet" type="text/css" href="styles/petit_souze.css">
+        <link rel="stylesheet" href="https://vectorjs.org/library.css">
         <link rel="icon" href="favicon.ico">
     </head>
     <body>
@@ -14,18 +15,13 @@
             </div>
         </div>
     
-    <!-- We will put our React component inside this div. -->
-    <div id="menu_button_container"></div>
+        <div id="menu_button_container"></div>
 
-    <!-- Load React. -->
-    <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
-    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
 
-    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 
-    <!-- Load our React component. -->
-    <script type="text/babel" src="menu_button.js"></script>
+        <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
 
+        <script src="scripts/menu_button.js"></script>
     </body>
 </html>
