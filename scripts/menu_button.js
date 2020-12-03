@@ -1,7 +1,5 @@
 'use strict';
 
-const e = React.createElement;
-
 class MenuButton extends React.Component {
   constructor(props) {
     super(props);
@@ -9,21 +7,23 @@ class MenuButton extends React.Component {
   }
 
   render() {
-    if (this.state.menu_open) {
-      return e(
-        'button',
-        { onClick: () => this.setState({ menu_open: false }) },
-        'MENUOPENED'
+    if (this.state.menu_open)
+    {
+      return (
+        <button onClick={() => this.setState({ menu_open: false }) }>
+          Menu opened
+        </button>
       );
     }
-
-    return e(
-      'button',
-      { onClick: () => this.setState({ menu_open: true }) },
-      'MENUCLOSED'
-    );
+    else
+    {
+      return (
+        <button onClick={() => this.setState({ menu_open: true }) }>
+          Menu closed
+        </button>
+      );
+    }
   }
 }
 
-const domContainer = document.querySelector('#menu_button_container');
-ReactDOM.render(e(MenuButton), domContainer);
+ReactDOM.render(<MenuButton />, document.getElementById('menu_button_container'));
