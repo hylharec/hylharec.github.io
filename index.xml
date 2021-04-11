@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Hylharec&#39;s Workshop</title>
+    <link>http://hylharec.github.io/</link>
+    <description>Recent content on Hylharec&#39;s Workshop</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Sun, 11 Apr 2021 14:06:25 +0200</lastBuildDate><atom:link href="http://hylharec.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SimpleFOCproject   Une Carte Et Une Bibliothèque Pour Controler Un Moteur BLDC Avec Du FOC</title>
+      <link>http://hylharec.github.io/posts/simplefocproject-une-carte-et-une-biblioth%C3%A8que-pour-controler-un-moteur-bldc-avec-du-foc/</link>
+      <pubDate>Sun, 11 Apr 2021 14:06:25 +0200</pubDate>
+      
+      <guid>http://hylharec.github.io/posts/simplefocproject-une-carte-et-une-biblioth%C3%A8que-pour-controler-un-moteur-bldc-avec-du-foc/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>TinyMovr   Un Mini Controleur De Moteur BLDC</title>
+      <link>http://hylharec.github.io/posts/tinymovr-un-mini-controleur-de-moteur-bldc/</link>
+      <pubDate>Sun, 11 Apr 2021 13:59:19 +0200</pubDate>
+      
+      <guid>http://hylharec.github.io/posts/tinymovr-un-mini-controleur-de-moteur-bldc/</guid>
+      <description>TinyMovr Liens https://tinymovr.com/products/tinymovr-motor-controller
+Résumé Il s&amp;rsquo;agit d&amp;rsquo;une carte à 60€ capable de controler par FOC un ou deux moteurs BLDC. Elle contient également un capteur d&amp;rsquo;angle magnétique pour récupérer la position angulaire de l&amp;rsquo;arbre moteur.
+Le créateur de vidéo &amp;ldquo;Loki Le Dev&amp;rdquo; a un projet de robotique sur sa chaîne Youtube dans lequel il a décidé d&amp;rsquo;utiliser cette carte. https://www.youtube.com/watch?v=Le0nYozSke4&amp;amp;ab_channel=LokiLeDev</description>
+    </item>
+    
+    <item>
+      <title>Hello_world</title>
+      <link>http://hylharec.github.io/posts/hello_world/</link>
+      <pubDate>Sun, 11 Apr 2021 11:31:01 +0200</pubDate>
+      
+      <guid>http://hylharec.github.io/posts/hello_world/</guid>
+      <description>Hello World ! First post on the blog, just to check if everything is ready and running.</description>
+    </item>
+    
+  </channel>
+</rss>

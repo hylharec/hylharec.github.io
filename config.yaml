@@ -1,0 +1,23 @@
+baseURL: http://hylharec.github.io/
+title: Hylharec's Workshop
+theme: PaperMod
+
+params:
+    defaultTheme: auto
+    
+    profileMode:
+        enabled: true
+        title: Home
+        buttons:
+            - name: Posts
+              url: posts
+    
+    homeInfoParams:
+        Title: "Home"
+        Content: Can be info, links, about...
+    
+    socialIcons:
+        - name: Gitlab
+          url: "https://gitlab.emse.fr/hugo.perrin"
+        - name: Github
+          url: "https://github.com/hylharec"
