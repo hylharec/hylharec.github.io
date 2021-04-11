@@ -2,15 +2,26 @@ baseURL: http://hylharec.github.io/
 title: Hylharec's Workshop
 theme: PaperMod
 
+outputs:
+    home:
+        - HTML
+        - RSS
+        - JSON
+
 params:
     defaultTheme: auto
+    
+    ShowBreadCrumbs: true
     
     profileMode:
         enabled: true
         title: Home
+        subtitle: A small static website to keep track of useful information regarding robotics and embedded electronics that I find.
         buttons:
             - name: Posts
               url: posts
+            - name: Projects
+              url: projects
     
     homeInfoParams:
         Title: "Home"

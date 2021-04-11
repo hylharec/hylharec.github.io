@@ -1,7 +1,7 @@
 ---
 title: "TinyMovr   Un Mini Controleur De Moteur BLDC"
 date: 2021-04-11T13:59:19+02:00
-draft: true
+draft: false
 ---
 
 # TinyMovr
