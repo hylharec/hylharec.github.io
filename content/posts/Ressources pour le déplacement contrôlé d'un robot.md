@@ -1,7 +1,7 @@
 ---
 title: "Ressources Pour Le Déplacement Contrôlé D'un Robot"
 date: 2021-06-12T13:59:29+02:00
-draft: true
+draft: false
 ---
 
 ## Resources RCVA - asservissement polaire
