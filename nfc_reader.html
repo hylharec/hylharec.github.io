@@ -8,6 +8,7 @@
     </head>
     <body>
         <!-- page content -->
+        <img src="Logo_emse.png" width="10%">  
         <h1>NFC Reader</h1>
         <div>
             <p>To read the M24LR04E-R RFID tag.</p>
@@ -62,7 +63,7 @@
                             document.getElementById("messages").innerHTML += "</br>" + record.data + " ; " + record.data.byteLength;
                             
                             for( let i = 0 ; i < record.data.buffer.byteLength ; i++) {
-                                document.getElementById("messages").innerHTML += "</br>--- " + record.data.byteOffset;
+                                document.getElementById("messages").innerHTML += "</br>--- " + String.fromCharCode(record.data.getInt8(i));
                             }
 
                             console.log("Record type:  " + record.recordType);
