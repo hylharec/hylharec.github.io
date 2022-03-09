@@ -11,6 +11,7 @@
         <h1>NFC Reader</h1>
         <div>
             <p>To read the M24LR04E-R RFID tag.</p>
+            <p id="log">Logger...</p>
         </div>
     </body>
     <script>
@@ -25,6 +26,7 @@
                 ndef.onreading = event => {
                     const message = event.message;
                     console.log("Received message !");
+                    document.getElementById("log").innerHTML = "Record type:  " + record.recordType;
                     for (const record of message.records) {
                         console.log("Record type:  " + record.recordType);
                         console.log("MIME type:    " + record.mediaType);
