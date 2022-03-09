@@ -20,8 +20,10 @@
             const ndef = new NDEFReader();
             ndef.scan().then(() => {
                 console.log("Scan started successfully.");
+                document.getElementById("log").innerHTML = "Scan started successfully.";
                 ndef.onreadingerror = () => {
                     console.log("Cannot read data from the NFC tag. Try another one?");
+                    document.getElementById("log").innerHTML = "Cannot read data from the NFC tag. Try another one?";
                 };
                 ndef.onreading = event => {
                     const message = event.message;
@@ -46,6 +48,9 @@
             }).catch(error => {
                 console.log(`Error! Scan failed to start: ${error}.`);
             });
+        } else {
+            console.log("No NFC reading feature in this browser.");
+            document.getElementById("log").innerHTML = "No NFC reading feature in this browser.";
         }
     </script>
 </html> 
