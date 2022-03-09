@@ -13,9 +13,12 @@
             <p>To read the M24LR04E-R RFID tag.</p>
             <button id="scanButton">Query NFC</button>
             <p id="log">Logger...</p>
+            <p id="messages">Messages...</p>
         </div>
     </body>
     <script>
+        let suspendNFC = false;
+
         if ('NDEFReader' in window) {
 
             navigator.permissions.query({ name: "nfc" }).then((nfcStatus) => {
@@ -44,13 +47,46 @@
 
                 ndef.onreading = event => {
                     //Scanned a tag successfully
-                    document.getElementById("log").innerHTML = "Scanned successfully !";
+                    if (suspendNFC == true) {
+                        document.getElementById("log").innerHTML = "Can only scan when page visible !";    
+                    } else {
+                        document.getElementById("log").innerHTML = "Scanned successfully !";
+
+                        document.getElementById("messages").innerHTML = "...";
+                        const message = event.message;
+                        for (const record of message.records) {
+                            document.getElementById("messages").innerHTML += "</br>" + record.recordType;
+                            console.log("Record type:  " + record.recordType);
+                            console.log("MIME type:    " + record.mediaType);
+                            console.log("Record id:    " + record.id);
+                            switch (record.recordType) {
+                            case "text":
+                                // TODO: Read text record with record data, lang, and encoding.
+                                break;
+                            case "url":
+                                // TODO: Read URL record with record data.
+                                break;
+                            default:
+                                // TODO: Handle other records with record data.
+                            }
+                        }
+                    }
                 };
 
                 }).catch(error => {
                 /// Something wrong with hardware
                 document.getElementById("log").innerHTML = "Hardware error !";
                 });
+            }
+        }
+
+        document.onvisibilitychange = event => {
+            if (document.hidden) {
+                // All NFC operations are suspended.
+                suspendNFC = true;
+            } else {
+                // All NFC operations can  be resumed.
+                suspendNFC = false;
             }
         }
     </script>
