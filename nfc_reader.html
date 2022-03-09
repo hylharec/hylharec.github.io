@@ -59,10 +59,10 @@
 
                         const message = event.message;
                         for (const record of message.records) {
-                            document.getElementById("messages").innerHTML += "</br>" + record.data + " ; " + record.data.buffer.byteLength;
+                            document.getElementById("messages").innerHTML += "</br>" + record.data + " ; " + record.data.byteLength;
                             
                             for( let i = 0 ; i < record.data.buffer.byteLength ; i++) {
-                                document.getElementById("messages").innerHTML += "</br>--- " + record.data.buffer.byteOffset;
+                                document.getElementById("messages").innerHTML += "</br>--- " + record.data.byteOffset;
                             }
 
                             console.log("Record type:  " + record.recordType);
