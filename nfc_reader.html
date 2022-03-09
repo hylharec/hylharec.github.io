@@ -11,8 +11,9 @@
         <h1>NFC Reader</h1>
         <div>
             <p>To read the M24LR04E-R RFID tag.</p>
-            <button id="scanButton">Query NFC</button>
+            <button id="scanButton">Query NFC Permission</button>
             <p id="log">Logger...</p>
+            <p id="device_id">Device ID : ...</p>
             <p id="messages">Messages...</p>
         </div>
     </body>
@@ -53,9 +54,12 @@
                         document.getElementById("log").innerHTML = "Scanned successfully !";
 
                         document.getElementById("messages").innerHTML = "...";
+
+                        document.getElementById("device_id").innerHTML = "Device ID : " + event.serialNumber;
+
                         const message = event.message;
                         for (const record of message.records) {
-                            document.getElementById("messages").innerHTML += "</br>" + record.data;
+                            document.getElementById("messages").innerHTML += "</br>" + record.data + " ; " + record.data.buffer.byteLength;
                             console.log("Record type:  " + record.recordType);
                             console.log("MIME type:    " + record.mediaType);
                             console.log("Record id:    " + record.id);
