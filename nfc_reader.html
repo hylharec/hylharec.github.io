@@ -16,43 +16,42 @@
         </div>
     </body>
     <script>
-        const ndef = new NDEFReader();
+        if ('NDEFReader' in window) {
 
-        async function startScanning() {
-            await ndef.scan();
-            ndef.onreading = event => {
-                const message = event.message;
-                console.log("Received message !");
-                document.getElementById("log").innerHTML = "Record type:  " + record.recordType;
-                for (const record of message.records) {
-                    console.log("Record type:  " + record.recordType);
-                    console.log("MIME type:    " + record.mediaType);
-                    console.log("Record id:    " + record.id);
-                    switch (record.recordType) {
-                        case "text":
-                        // TODO: Read text record with record data, lang, and encoding.
-                        break;
-                        case "url":
-                        // TODO: Read URL record with record data.
-                        break;
-                        default:
-                        // TODO: Handle other records with record data.
-                    }
+            navigator.permissions.query({ name: "nfc" }).then((nfcStatus) => {
+
+                if (nfcStatus.state === "granted") {
+                    startScanning();
+                } else {
+
+                document.querySelector("#scanButton").onclick = event => {
+                    startScanning();
+                };
+
                 }
-            };
-        }
 
-        const nfcPermissionStatus = await navigator.permissions.query({ name: "nfc" });
-        if (nfcPermissionStatus.state === "granted") {
-            // NFC access was previously granted, so we can start NFC scanning now.
-            startScanning();
-        } else {
-            // Show a "scan" button.
-            document.querySelector("#scanButton").style.display = "block";
-            document.querySelector("#scanButton").onclick = event => {
-                // Prompt user to allow UA to send and receive info when they tap NFC devices.
-                startScanning();
-            };
+            });
+
+            function startScanning(){
+                const ndef = new NDEFReader();
+
+                ndef.scan().then(() => {
+
+                ndef.onreadingerror = () => {
+                    // Could not scan a tag, try another
+                    document.getElementById("log").innerHTML = "Tag read error !";
+                };
+
+                ndef.onreading = event => {
+                    //Scanned a tag successfully
+                    document.getElementById("log").innerHTML = "Scanned successfully !";
+                };
+
+                }).catch(error => {
+                /// Something wrong with hardware
+                document.getElementById("log").innerHTML = "Hardware error !";
+                });
+            }
         }
     </script>
 </html> 
