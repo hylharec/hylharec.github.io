@@ -11,46 +11,54 @@
         <h1>NFC Reader</h1>
         <div>
             <p>To read the M24LR04E-R RFID tag.</p>
+            <button id="scanButton">Query NFC</button>
             <p id="log">Logger...</p>
         </div>
     </body>
     <script>
-        if ('NDEFReader' in window) {
-            /* Scan and write NFC tags */ 
+        document.querySelector("#scanButton").onclick = async () => {
             const ndef = new NDEFReader();
-            ndef.scan().then(() => {
-                console.log("Scan started successfully.");
-                document.getElementById("log").innerHTML = "Scan started successfully.";
-                ndef.onreadingerror = () => {
-                    console.log("Cannot read data from the NFC tag. Try another one?");
-                    document.getElementById("log").innerHTML = "Cannot read data from the NFC tag. Try another one?";
-                };
-                ndef.onreading = event => {
-                    const message = event.message;
-                    console.log("Received message !");
-                    document.getElementById("log").innerHTML = "Record type:  " + record.recordType;
-                    for (const record of message.records) {
-                        console.log("Record type:  " + record.recordType);
-                        console.log("MIME type:    " + record.mediaType);
-                        console.log("Record id:    " + record.id);
-                        switch (record.recordType) {
-                            case "text":
-                            // TODO: Read text record with record data, lang, and encoding.
-                            break;
-                            case "url":
-                            // TODO: Read URL record with record data.
-                            break;
-                            default:
-                            // TODO: Handle other records with record data.
+            // Prompt user to allow website to interact with NFC devices.
+            await ndef.scan();
+            
+            if ('NDEFReader' in window) {
+                /* Scan and write NFC tags */ 
+                const ndef = new NDEFReader();
+                ndef.scan().then(() => {
+                    console.log("Scan started successfully.");
+                    document.getElementById("log").innerHTML = "Scan started successfully.";
+                    ndef.onreadingerror = () => {
+                        console.log("Cannot read data from the NFC tag. Try another one?");
+                        document.getElementById("log").innerHTML = "Cannot read data from the NFC tag. Try another one?";
+                    };
+                    ndef.onreading = event => {
+                        const message = event.message;
+                        console.log("Received message !");
+                        document.getElementById("log").innerHTML = "Record type:  " + record.recordType;
+                        for (const record of message.records) {
+                            console.log("Record type:  " + record.recordType);
+                            console.log("MIME type:    " + record.mediaType);
+                            console.log("Record id:    " + record.id);
+                            switch (record.recordType) {
+                                case "text":
+                                // TODO: Read text record with record data, lang, and encoding.
+                                break;
+                                case "url":
+                                // TODO: Read URL record with record data.
+                                break;
+                                default:
+                                // TODO: Handle other records with record data.
+                            }
                         }
-                    }
-                };
-            }).catch(error => {
-                console.log(`Error! Scan failed to start: ${error}.`);
-            });
-        } else {
-            console.log("No NFC reading feature in this browser.");
-            document.getElementById("log").innerHTML = "No NFC reading feature in this browser.";
-        }
+                    };
+                }).catch(error => {
+                    console.log(`Error! Scan failed to start: ${error}.`);
+                });
+            } else {
+                console.log("No NFC reading feature in this browser.");
+                document.getElementById("log").innerHTML = "No NFC reading feature in this browser.";
+            }
+
+        };
     </script>
 </html> 
