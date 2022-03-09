@@ -53,13 +53,18 @@
                     } else {
                         document.getElementById("log").innerHTML = "Scanned successfully !";
 
-                        document.getElementById("messages").innerHTML = "...";
+                        //document.getElementById("messages").innerHTML = "...";
 
                         document.getElementById("device_id").innerHTML = "Device ID : " + event.serialNumber;
 
                         const message = event.message;
                         for (const record of message.records) {
                             document.getElementById("messages").innerHTML += "</br>" + record.data + " ; " + record.data.buffer.byteLength;
+                            
+                            for( let i = 0 ; i < record.data.buffer.byteLength ; i++) {
+                                document.getElementById("messages").innerHTML += "</br>--- " + record.data.buffer.byteOffset;
+                            }
+
                             console.log("Record type:  " + record.recordType);
                             console.log("MIME type:    " + record.mediaType);
                             console.log("Record id:    " + record.id);
