@@ -55,7 +55,7 @@
                         document.getElementById("messages").innerHTML = "...";
                         const message = event.message;
                         for (const record of message.records) {
-                            document.getElementById("messages").innerHTML += "</br>" + record.recordType;
+                            document.getElementById("messages").innerHTML += "</br>" + record.data;
                             console.log("Record type:  " + record.recordType);
                             console.log("MIME type:    " + record.mediaType);
                             console.log("Record id:    " + record.id);
