@@ -30,7 +30,7 @@
                 
             </div>
 
-            <div>
+            <div id="tag_result">
                 <p>Lecture terminée !</p>
                 <p id="log">Logger...</p>
                 <p id="device_id">Device ID : ...</p>
@@ -71,60 +71,75 @@
                 };
 
                 ndef.onreading = event => {
-                    //Scanned a tag successfully
+                    //First scan of a tag successfull
+                    document.getElementById("place_phone_anim").hidden = true;
+                    document.getElementById("tag_comm").hidden = false;
+                    document.getElementById("tag_result").hidden = true;
+
+                    // handle capacitive sensor sample reception
+
+                    // Show results
                     if (suspendNFC == true) {
                         document.getElementById("log").innerHTML = "Can only scan when page visible !";    
                     } else {
-                        document.getElementById("log").innerHTML = "Scanned successfully !";
-
-                        document.getElementById("messages").innerHTML = "";
-
-                        document.getElementById("device_id").innerHTML = "Device ID : " + event.serialNumber;
-
-                        // =====================================================================================================================
-                        // ===================================== DEAL WITH THE MESSAGES RECEIVED FROM THE TAG ==================================
-                        const message = event.message;
-                        for (const record of message.records) {
-
-                            // Write read messages on the html page
-
-                            document.getElementById("messages").innerHTML += "</br>" + record.data + " ; " + record.data.byteLength + "</br>";
-                            
-                            // Write plaintext ASCII message
-                            for( let i = 0 ; i < record.data.buffer.byteLength ; i++) {
-                                document.getElementById("messages").innerHTML += String.fromCharCode(record.data.getInt8(i));
-                            }
-
-                            document.getElementById("messages").innerHTML += " : ";
-
-                            // Write hex 
-                            for( let i = 0 ; i < record.data.buffer.byteLength ; i++) {
-                                document.getElementById("messages").innerHTML += record.data.getInt8(i).toString(16) + " ";
-                            }
-
-                            console.log("Record type:  " + record.recordType);
-                            console.log("MIME type:    " + record.mediaType);
-                            console.log("Record id:    " + record.id);
-                            switch (record.recordType) {
-                            case "text":
-                                // TODO: Read text record with record data, lang, and encoding.
-                                break;
-                            case "url":
-                                // TODO: Read URL record with record data.
-                                break;
-                            default:
-                                // TODO: Handle other records with record data.
-                            }
-                        }
-                        // =====================================================================================================================
-                        // =====================================================================================================================
+                        setTimeout(handleResults(event), 2000);
                     }
                 };
-
                 }).catch(error => {
                 /// Something wrong with hardware
                 document.getElementById("log").innerHTML = "Hardware error !";
                 });
+            }
+
+            function handleResults(event) {
+                document.getElementById("place_phone_anim").hidden = true;
+                document.getElementById("tag_comm").hidden = true;
+                document.getElementById("tag_result").hidden = false;
+
+                
+                document.getElementById("log").innerHTML = "Scanned successfully !";
+
+                document.getElementById("messages").innerHTML = "";
+
+                document.getElementById("device_id").innerHTML = "Device ID : " + event.serialNumber;
+
+                // =====================================================================================================================
+                // ===================================== DEAL WITH THE MESSAGES RECEIVED FROM THE TAG ==================================
+                const message = event.message;
+                for (const record of message.records) {
+
+                    // Write read messages on the html page
+
+                    document.getElementById("messages").innerHTML += "</br>" + record.data + " ; " + record.data.byteLength + "</br>";
+                    
+                    // Write plaintext ASCII message
+                    for( let i = 0 ; i < record.data.buffer.byteLength ; i++) {
+                        document.getElementById("messages").innerHTML += String.fromCharCode(record.data.getInt8(i));
+                    }
+
+                    document.getElementById("messages").innerHTML += " : ";
+
+                    // Write hex 
+                    for( let i = 0 ; i < record.data.buffer.byteLength ; i++) {
+                        document.getElementById("messages").innerHTML += record.data.getInt8(i).toString(16) + " ";
+                    }
+
+                    console.log("Record type:  " + record.recordType);
+                    console.log("MIME type:    " + record.mediaType);
+                    console.log("Record id:    " + record.id);
+                    switch (record.recordType) {
+                    case "text":
+                        // TODO: Read text record with record data, lang, and encoding.
+                        break;
+                    case "url":
+                        // TODO: Read URL record with record data.
+                        break;
+                    default:
+                        // TODO: Handle other records with record data.
+                    }
+                }
+                // =====================================================================================================================
+                // =====================================================================================================================
             }
         }
 
