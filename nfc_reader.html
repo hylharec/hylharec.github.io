@@ -40,6 +40,7 @@
             function startScanning(){
                 const ndef = new NDEFReader();
 
+                
                 ndef.scan().then(() => {
 
                 ndef.onreadingerror = () => {
@@ -60,10 +61,10 @@
 
                         const message = event.message;
                         for (const record of message.records) {
-                            document.getElementById("messages").innerHTML += "</br>" + record.data + " ; " + record.data.byteLength;
+                            document.getElementById("messages").innerHTML += "</br>" + record.data + " ; " + record.data.byteLength + "</br>";
                             
                             for( let i = 0 ; i < record.data.buffer.byteLength ; i++) {
-                                document.getElementById("messages").innerHTML += "</br>--- " + String.fromCharCode(record.data.getInt8(i));
+                                document.getElementById("messages").innerHTML += record.data.getInt8(i).toString(16) + " ";
                             }
 
                             console.log("Record type:  " + record.recordType);
