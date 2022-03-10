@@ -64,6 +64,12 @@
                             document.getElementById("messages").innerHTML += "</br>" + record.data + " ; " + record.data.byteLength + "</br>";
                             
                             for( let i = 0 ; i < record.data.buffer.byteLength ; i++) {
+                                document.getElementById("messages").innerHTML += String.fromCharCode(record.data.getInt8(i));
+                            }
+
+                            document.getElementById("messages").innerHTML += " : ";
+
+                            for( let i = 0 ; i < record.data.buffer.byteLength ; i++) {
                                 document.getElementById("messages").innerHTML += record.data.getInt8(i).toString(16) + " ";
                             }
 
