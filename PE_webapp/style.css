@@ -53,11 +53,11 @@ header {
     }
 
         #page_title h1 {
-            font-size: 5vh;
+            font-size: 4vh;
         }
 
         #page_title h3 {
-            font-size: 2vh;
+            font-size: 1.5vh;
         }
 
 #body {
@@ -71,6 +71,8 @@ header {
     overflow:scroll;
     overflow-x:hidden;
     overflow-y:scroll;
+
+    font-size: 3em;
 }
 
     #place_phone_anim {
