@@ -111,6 +111,14 @@ header {
             z-index: 2;
         }
 
+    #tag_comm {
+        
+    }
+
+    #tag_result {
+
+    }
+
 footer {
     background-color: #4d009a;
 
@@ -119,11 +127,11 @@ footer {
     width: 100%;
     max-width: 100vh;
 
-    height: 5%;
+    height: 7%;
     padding-top: 5px;
 
     text-align: center;
-    font-size: 0.8em;
+    font-size: 1.2em;
     color: white;
 
     overflow:wrap;
