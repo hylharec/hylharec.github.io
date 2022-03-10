@@ -98,8 +98,8 @@ header {
         }
 
         @keyframes place_phone_top {
-            from {top:10%;}
-            to {top:25%}
+            from {top:15%;}
+            to {top:30%}
         }
 
         #place_phone_anim .antenna_tilted {
