@@ -21,12 +21,17 @@
             <div id="place_phone_anim">
                 <img class="smartphone_tilted" src="smartphone_tilted.png" />
                 <img class="antenna_tilted" src="antenna_tilted.png" />
-                <button id="scanButton">Query NFC Permission</button>
+                <button id="scanButton">Requête permission NFC</button>
             </div>
 
             <div id="tag_comm">
                 <p>Lecture en cours...</p>
-                
+                <div id="loading_animation">
+                    <img id="dot1" src="loading_dot.png" />
+                    <img id="dot2" src="loading_dot.png" />
+                    <img id="dot3" src="loading_dot.png" />
+                    <img id="dot4" src="loading_dot.png" />
+                </div>
                 
             </div>
 
@@ -52,6 +57,7 @@
             navigator.permissions.query({ name: "nfc" }).then((nfcStatus) => {
 
                 if (nfcStatus.state === "granted") {
+                    document.getElementById("scanButton").hidden = true;
                     startScanning();
                 } else {
 
