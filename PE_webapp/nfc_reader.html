@@ -46,110 +46,95 @@
         <footer>Page créée pour des besoins de démonstration - Projet d'étude EMSE ISMIN 2022 - Pierre Merrien & Hugo Perrin</footer>
     </body>
     <script>
+        // Initial hide all but placement animation
         document.getElementById("place_phone_anim").hidden = false;
         document.getElementById("tag_comm").hidden = true;
         document.getElementById("tag_result").hidden = true;
 
         let suspendNFC = false;
+        let allowedNFC = false;
 
-        if ('NDEFReader' in window) {
+        // Handle NFC permission
+        navigator.permissions.query({ name: "nfc" }).then((nfcStatus) => {
+            if (nfcStatus.state === "granted") {
+                allowedNFC = true;
+                console.log("NFC Permission already granted");
+                document.getElementById("scanButton").hidden = true;
 
-            navigator.permissions.query({ name: "nfc" }).then((nfcStatus) => {
-
-                if (nfcStatus.state === "granted") {
-                    document.getElementById("scanButton").hidden = true;
-                    startScanning();
-                } else {
-
+                sampleM24();
+            } else {
+                console.log("NFC Permission required");
+                document.getElementById("scanButton").hidden = false;
                 document.querySelector("#scanButton").onclick = event => {
-                    startScanning();
+                    scanOnce();
                 };
+                document.querySelector("#scanButton").onclick = event => {}; // no need to continue button use
+            }
+        });
 
+        async function scanOnce() {
+            const ndef = new NDEFReader();
+
+            await ndef.scan({ /**/ }); // Should ask permission in browser if not already allowed NFC
+            
+            // Check browser permission status again, to check user answer
+            navigator.permissions.query({ name: "nfc" }).then((nfcStatus) => {
+                if (nfcStatus.state === "granted") {
+                    console.log("NFC Permission now granted");
+                    document.getElementById("scanButton").hidden = true;
+                    allowedNFC = true;
+
+                    sampleM24();
+                } else {
+                    console.log("NFC Permission not granted");
+                    allowedNFC = false;
                 }
-
             });
+        }
 
-            function startScanning(){
-                const ndef = new NDEFReader();
+        async function sampleM24() {
+            while(allowedNFC == false || suspendNFC == true) {/*wait*/}
+            
+            const ndef = new NDEFReader();
 
-                
-                ndef.scan().then(() => {
-                    ndef.onreadingerror = () => {
-                        // Could not scan a tag, try another
-                        document.getElementById("log").innerHTML = "Tag read error !";
-                    };
+            var m24reg0 = 0x0;
+            var m24reg1 = 0x0;
 
-                    ndef.onreading = event => {
-                        //First scan of a tag successfull
-                        document.getElementById("place_phone_anim").hidden = true;
-                        document.getElementById("tag_comm").hidden = false;
-                        document.getElementById("tag_result").hidden = true;
+            ndef.onreading = event => {
+                // Successful scan
 
-                        // handle capacitive sensor sample reception
-
-                        // Show results
-                        if (suspendNFC == true) {
-                            document.getElementById("log").innerHTML = "Can only scan when page visible !";    
-                        } else {
-                            setTimeout(function() {handleResults(event);}, 3500);
-                        }
-                    };
-                }).catch(error => {
-                    /// Something wrong with hardware
-                    document.getElementById("log").innerHTML = "Hardware error !";
-                });
-            }
-
-            function handleResults(event) {
+                // Show progress animation while getting correct m24 reading
                 document.getElementById("place_phone_anim").hidden = true;
-                document.getElementById("tag_comm").hidden = true;
-                document.getElementById("tag_result").hidden = false;
+                document.getElementById("tag_comm").hidden = false;
+                document.getElementById("tag_result").hidden = true;
 
-                
-                document.getElementById("log").innerHTML = "Scanned successfully !";
-
-                document.getElementById("messages").innerHTML = "";
-
-                document.getElementById("device_id").innerHTML = "Device ID : " + event.serialNumber;
-
-                // =====================================================================================================================
-                // ===================================== DEAL WITH THE MESSAGES RECEIVED FROM THE TAG ==================================
+                // handle capacitive sensor sample reception
                 const message = event.message;
-                for (const record of message.records) {
-
-                    // Write read messages on the html page
-
-                    document.getElementById("messages").innerHTML += "</br>" + record.data + " ; " + record.data.byteLength + "</br>";
-                    
-                    // Write plaintext ASCII message
-                    for( let i = 0 ; i < record.data.buffer.byteLength ; i++) {
-                        document.getElementById("messages").innerHTML += String.fromCharCode(record.data.getInt8(i));
+                // at least 2 ndef messages
+                if(message.records.length >= 2) {
+                    m24reg0 = 0;
+                    m24reg1 = 0;
+                    // reg0
+                    for( let i = 0 ; i < message.records[0].data.buffer.byteLength ; i++) {
+                        m24reg0 = m24reg0 << 8 + message.records[0].data.getInt8(i);
                     }
-
-                    document.getElementById("messages").innerHTML += " : ";
-
-                    // Write hex 
-                    for( let i = 0 ; i < record.data.buffer.byteLength ; i++) {
-                        document.getElementById("messages").innerHTML += record.data.getInt8(i).toString(16) + " ";
-                    }
-
-                    console.log("Record type:  " + record.recordType);
-                    console.log("MIME type:    " + record.mediaType);
-                    console.log("Record id:    " + record.id);
-                    switch (record.recordType) {
-                    case "text":
-                        // TODO: Read text record with record data, lang, and encoding.
-                        break;
-                    case "url":
-                        // TODO: Read URL record with record data.
-                        break;
-                    default:
-                        // TODO: Handle other records with record data.
+                    // reg1
+                    for( let i = 0 ; i < message.records[1].data.buffer.byteLength ; i++) {
+                        m24reg1 = m24reg1 << 8 + message.records[1].data.getInt8(i);
                     }
                 }
-                // =====================================================================================================================
-                // =====================================================================================================================
             }
+
+            while(m24reg1 & 0xF == 0) {
+                if(allowedNFC == true && suspendNFC == false) {
+                    await ndef.scan();
+                }
+            }
+
+            ndef.onreading = event => {/*empty*/}
+
+            // correct sensor message was sent by m24, showing result
+            handleResults(event);
         }
 
         document.onvisibilitychange = event => {
