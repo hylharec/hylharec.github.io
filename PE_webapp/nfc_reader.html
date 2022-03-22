@@ -123,14 +123,14 @@
                     
                     // Write plaintext ASCII message
                     for( let i = 0 ; i < record.data.buffer.byteLength ; i++) {
-                        document.getElementById("messages").innerHTML += String.fromCharCode(record.data.getInt8(i));
+                        document.getElementById("messages").innerHTML += String.fromCharCode(record.data.getUint8(i));
                     }
 
                     document.getElementById("messages").innerHTML += " : ";
 
                     // Write hex 
                     for( let i = 0 ; i < record.data.buffer.byteLength ; i++) {
-                        document.getElementById("messages").innerHTML += record.data.getInt8(i).toString(16) + " ";
+                        document.getElementById("messages").innerHTML += record.data.getUint8(i).toString(16) + " ";
                     }
 
                     console.log("Record type:  " + record.recordType);
