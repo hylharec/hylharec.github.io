@@ -128,10 +128,16 @@
 
                     //document.getElementById("messages").innerHTML += " : ";
 
+                    let sensor_value = 0;
+                    
                     // Write hex 
                     for( let i = 0 ; i < record.data.buffer.byteLength ; i++) {
+                        sensor_value << 8;
+                        sensor_value += record.data.getUint8(i);
                         document.getElementById("messages").innerHTML += record.data.getUint8(i).toString(16) + " ";
                     }
+                    
+                    document.getElementById("messages").innerHTML += " : " + sensor_value.toString(10);
 
                     console.log("Record type:  " + record.recordType);
                     console.log("MIME type:    " + record.mediaType);
