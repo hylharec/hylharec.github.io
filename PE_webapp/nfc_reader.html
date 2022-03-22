@@ -18,60 +18,66 @@
         </header>
 
         <div id="body">
+            <!-- ================== Tutorial animation before 1st tag reading ===================-->
             <div id="place_phone_anim">
                 <img class="smartphone_tilted" src="smartphone_tilted.png" />
                 <img class="antenna_tilted" src="antenna_tilted.png" />
                 <button id="scanButton">Requête permission NFC</button>
             </div>
 
-            <div id="tag_comm">
-                <p>Lecture en cours...</p>
-                <div id="loading_animation">
-                    <img id="dot1" src="loading_dot.png" />
-                    <img id="dot2" src="loading_dot.png" />
-                    <img id="dot3" src="loading_dot.png" />
-                    <img id="dot4" src="loading_dot.png" />
-                </div>
-                
-            </div>
-
+            <!-- ================== Results and button after 1st tag reading ===================-->
             <div id="tag_result">
-                <p>Lecture terminée !</p>
-                <p id="log">Logger...</p>
-                <p id="device_id">Device ID : ...</p>
-                <p id="messages">Messages...</p>
+                <div id="buttons_scale">
+                    <button id="button_tare">Tare</button>
+                    <button id="button_5kg">5 kg</button>
+                    <form id="sensibilite_form" style="text-align: center;">
+                        <label for="sensibilite">Sensibilité : </label>
+                        <input id="sensibilite" type="text" size="10" placeholder="0.0004768" value="0.0004768" />
+                    </form>
+                </div>
+                <div id="results">
+                    <span>Masse :</span>
+                    <p id="weight">0 kg</p>
+                    <span id="device_id">Device ID : ...</span>
+                    <span id="log">Logger...</span>
+                </div>
             </div>
+            <!-- ================== ======================================= ===================-->
         </div>
 
         <footer>Page créée pour des besoins de démonstration - Projet d'étude EMSE ISMIN 2022 - Pierre Merrien & Hugo Perrin</footer>
     </body>
     <script>
-        document.getElementById("place_phone_anim").hidden = false;
-        document.getElementById("tag_comm").hidden = true;
-        document.getElementById("tag_result").hidden = true;
+        document.getElementById("place_phone_anim").hidden = true;
+        document.getElementById("tag_result").hidden = false;
 
         let suspendNFC = false;
 
+        let sensor_value = 8770150; // bit
+        let tare = 8680000; // bit
+        let sensibility = 0.0004768; // bit/N
+        let mass = 0; // kg
+        let gravity = 9.81; // N/kg
+
         if ('NDEFReader' in window) {
 
+            // Check NFC feature permission in browser
             navigator.permissions.query({ name: "nfc" }).then((nfcStatus) => {
-
+                // NFC already enabled
                 if (nfcStatus.state === "granted") {
                     document.getElementById("scanButton").hidden = true;
                     startScanning();
                 } else {
-
+                // NFC not yet enabled, wait for user to click on button to ask for permission by trying to read tag
                 document.querySelector("#scanButton").onclick = event => {
                     startScanning();
                 };
 
                 }
-
             });
 
             function startScanning(){
                 const ndef = new NDEFReader();
-
                 
                 ndef.scan().then(() => {
                     ndef.onreadingerror = () => {
@@ -80,18 +86,12 @@
                     };
 
                     ndef.onreading = event => {
-                        //First scan of a tag successfull
-                        document.getElementById("place_phone_anim").hidden = true;
-                        document.getElementById("tag_comm").hidden = true;
-                        document.getElementById("tag_result").hidden = false;
-
-                        // handle capacitive sensor sample reception
-
-                        // Show results
+                        // A tag was read
                         if (suspendNFC == true) {
                             document.getElementById("log").innerHTML = "Can only scan when page visible !";    
                         } else {
-                            setTimeout(function() {handleResults(event);}, 3500);
+                            // Handle showing results
+                            handleResults(event);
                         }
                     };
                 }).catch(error => {
@@ -101,12 +101,9 @@
             }
 
             function handleResults(event) {
+                // Hide tutorial animation if not done already
                 document.getElementById("place_phone_anim").hidden = true;
-                document.getElementById("tag_comm").hidden = true;
                 document.getElementById("tag_result").hidden = false;
-
-                
-                document.getElementById("log").innerHTML = "Scanned successfully !";
 
                 document.getElementById("messages").innerHTML = "";
 
@@ -119,51 +116,68 @@
 
                     // Write read messages on the html page
 
-                    document.getElementById("messages").innerHTML += "</br>" + record.data + " ; " + record.data.byteLength + "</br>";
+                    //document.getElementById("messages").innerHTML += "</br>" + record.data + " ; " + record.data.byteLength + "</br>";
                     
                     // Write plaintext ASCII message
                     /*for( let i = 0 ; i < record.data.buffer.byteLength ; i++) {
                         document.getElementById("messages").innerHTML += String.fromCharCode(record.data.getUint8(i));
                     }*/
-
                     //document.getElementById("messages").innerHTML += " : ";
 
-                    let sensor_value = 0;
-                    let tarre = 8680000;
-                    let sensibilite = 0.0004768; // bit/N
-                    
-                    // Write hex 
+                    // Read sensor value from received ndef message 
+                    sensor_value = 0;
                     for( let i = 0 ; i < record.data.buffer.byteLength ; i++) {
                         sensor_value = sensor_value << 8;
                         sensor_value += record.data.getUint8(i);
-                        
-                        //document.getElementById("messages").innerHTML += record.data.getUint8(i).toString(16) + " ";
                     }
                     
-                    sensor_value -= tarre;
-                    sensor_value *= sensibilite
+                    // Compute mass
+                    mass = (sensor_value - tare) * sensibility / gravity;
+                    mass = Math.round(mass*1000)/1000;
                     
-                    document.getElementById("messages").innerHTML += " : " + sensor_value.toString(10) + " N </br>" + (sensor_value/9.81).toString(10) + " kg";
-
-                    console.log("Record type:  " + record.recordType);
-                    console.log("MIME type:    " + record.mediaType);
-                    console.log("Record id:    " + record.id);
-                    switch (record.recordType) {
-                    case "text":
-                        // TODO: Read text record with record data, lang, and encoding.
-                        break;
-                    case "url":
-                        // TODO: Read URL record with record data.
-                        break;
-                    default:
-                        // TODO: Handle other records with record data.
-                    }
+                    // show mass in kg on page
+                    document.getElementById("weight").innerHTML = mass.toString(10) + " kg";
                 }
                 // =====================================================================================================================
                 // =====================================================================================================================
             }
         }
 
+        function virtual_sensor_read() {
+            // Compute mass
+            mass = (sensor_value - tare) * sensibility / gravity;
+            mass = Math.round(mass*1000)/1000;
+            
+            // show mass in kg on page
+            document.getElementById("weight").innerHTML = mass.toString(10) + " kg";
+
+            setTimeout(virtual_sensor_read, 500);
+        }
+
+        setTimeout(virtual_sensor_read, 500);
+
+        document.querySelector("#sensibilite").onchange = event => {
+            sensibility = document.querySelector("#sensibilite").value;
+        }
+
+        // Tare with last sensor_value
+        document.querySelector("#button_tare").onclick = event => {
+            tare = sensor_value;
+        }
+
+        // Change sensibility according to last sensor value and tare
+        document.querySelector("#button_5kg").onclick = event => {
+            if(sensor_value - tare != 0) {
+                sensibility = 5 * gravity / (sensor_value - tare);
+                sensibility = Math.round(sensibility*10000000)/10000000;
+
+                document.querySelector("#sensibilite").value = sensibility.toString(10);
+            } else {
+                document.getElementById("log").innerHTML = "Sensibility compute error : sensor_value - tare = 0 !";
+            }
+        }
+
+        // Prevent NFC reading when browser not visible on the screen
         document.onvisibilitychange = event => {
             if (document.hidden) {
                 // All NFC operations are suspended.
