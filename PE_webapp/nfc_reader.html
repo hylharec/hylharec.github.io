@@ -82,8 +82,8 @@
                     ndef.onreading = event => {
                         //First scan of a tag successfull
                         document.getElementById("place_phone_anim").hidden = true;
-                        document.getElementById("tag_comm").hidden = false;
-                        document.getElementById("tag_result").hidden = true;
+                        document.getElementById("tag_comm").hidden = true;
+                        document.getElementById("tag_result").hidden = false;
 
                         // handle capacitive sensor sample reception
 
@@ -122,11 +122,11 @@
                     document.getElementById("messages").innerHTML += "</br>" + record.data + " ; " + record.data.byteLength + "</br>";
                     
                     // Write plaintext ASCII message
-                    for( let i = 0 ; i < record.data.buffer.byteLength ; i++) {
+                    /*for( let i = 0 ; i < record.data.buffer.byteLength ; i++) {
                         document.getElementById("messages").innerHTML += String.fromCharCode(record.data.getUint8(i));
-                    }
+                    }*/
 
-                    document.getElementById("messages").innerHTML += " : ";
+                    //document.getElementById("messages").innerHTML += " : ";
 
                     // Write hex 
                     for( let i = 0 ; i < record.data.buffer.byteLength ; i++) {
