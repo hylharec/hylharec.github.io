@@ -137,7 +137,7 @@
                         sensor_value = sensor_value << 8;
                         sensor_value += record.data.getUint8(i);
                         
-                        document.getElementById("messages").innerHTML += record.data.getUint8(i).toString(16) + " ";
+                        //document.getElementById("messages").innerHTML += record.data.getUint8(i).toString(16) + " ";
                     }
                     
                     sensor_value -= tarre;
