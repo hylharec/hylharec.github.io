@@ -140,7 +140,8 @@
                         document.getElementById("messages").innerHTML += record.data.getUint8(i).toString(16) + " ";
                     }
                     
-                    
+                    sensor_value -= tarre;
+                    sensor_value *= sensibilite
                     
                     document.getElementById("messages").innerHTML += " : " + sensor_value.toString(10);
 
