@@ -143,7 +143,7 @@
                     sensor_value -= tarre;
                     sensor_value *= sensibilite
                     
-                    document.getElementById("messages").innerHTML += " : " + sensor_value.toString(10);
+                    document.getElementById("messages").innerHTML += " : " + sensor_value.toString(10) + " N ; " + (sensor_value/9.81).toString(10) + " kg";
 
                     console.log("Record type:  " + record.recordType);
                     console.log("MIME type:    " + record.mediaType);
