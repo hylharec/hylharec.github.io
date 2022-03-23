@@ -45,7 +45,7 @@
             <!-- ================== ======================================= ===================-->
         </div>
 
-        <footer>Page créée pour des besoins de démonstration - Projet d'étude EMSE ISMIN 2022 - Pierre Merrien & Hugo Perrin</footer>
+        <footer>Page créée pour des besoins de démonstration - Projet d'étude EMSE ISMIN 2022 - Pierre Merrien & Hugo Perrin - Sous la supervision et avec l'aide de Valentin Divay</footer>
     </body>
     <script>
         document.getElementById("place_phone_anim").hidden = true;
@@ -124,6 +124,7 @@
                     }*/
                     //document.getElementById("messages").innerHTML += " : ";
 
+                    document.getElementById("log").innerHTML = "Reading tag...";
                     // Read sensor value from received ndef message 
                     sensor_value = 0;
                     for( let i = 0 ; i < record.data.buffer.byteLength ; i++) {
