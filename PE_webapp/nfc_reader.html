@@ -146,7 +146,8 @@
             }
         }
 
-        /*function virtual_sensor_read() {
+        // Function called every 500 ms to update the mass according to last sensibility and tare (even if no new sensor value)
+        async function virtual_sensor_read() {
             // Compute mass
             mass = (sensor_value - tare) * sensibility / gravity;
             mass = Math.round(mass*1000)/1000;
@@ -154,14 +155,16 @@
             // show mass in kg on page
             document.getElementById("weight").innerHTML = mass.toString(10) + " kg";
 
-            setTimeout(virtual_sensor_read, 1000);
+            setTimeout(virtual_sensor_read, 500);
         }
 
-        setTimeout(virtual_sensor_read, 1000);*/
+        setTimeout(virtual_sensor_read, 500);
 
+        // Sensibility updated according to user input
         document.querySelector("#sensibilite").onchange = event => {
             sensibility = document.querySelector("#sensibilite").value;
         }
+        document.querySelector("#sensibilite").onkeypress = "this.onchange();"
 
         // Tare with last sensor_value
         document.querySelector("#button_tare").onclick = event => {
