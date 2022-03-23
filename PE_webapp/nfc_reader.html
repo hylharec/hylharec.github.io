@@ -28,7 +28,7 @@
             <!-- ================== Results and button after 1st tag reading ===================-->
             <div id="tag_result">
                 <div id="buttons_scale">
-                    <button id="button_tare">Tare</button>
+                    <button id="button_tare">Tare</button><br/>
                     <button id="button_5kg">5 kg</button>
                     <form id="sensibilite_form" style="text-align: center;">
                         <label for="sensibilite">Sensibilité : </label>
@@ -38,7 +38,7 @@
                 <div id="results">
                     <span>Masse :</span>
                     <p id="weight">0 kg</p>
-                    <span id="device_id">Device ID : ...</span>
+                    <span id="device_id">Device ID : ...</span><br/>
                     <span id="log">Logger...</span>
                 </div>
             </div>
@@ -143,7 +143,7 @@
             }
         }
 
-        function virtual_sensor_read() {
+        /*function virtual_sensor_read() {
             // Compute mass
             mass = (sensor_value - tare) * sensibility / gravity;
             mass = Math.round(mass*1000)/1000;
@@ -151,10 +151,10 @@
             // show mass in kg on page
             document.getElementById("weight").innerHTML = mass.toString(10) + " kg";
 
-            setTimeout(virtual_sensor_read, 500);
+            setTimeout(virtual_sensor_read, 1000);
         }
 
-        setTimeout(virtual_sensor_read, 500);
+        setTimeout(virtual_sensor_read, 1000);*/
 
         document.querySelector("#sensibilite").onchange = event => {
             sensibility = document.querySelector("#sensibilite").value;
