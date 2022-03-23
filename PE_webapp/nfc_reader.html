@@ -51,13 +51,13 @@
         document.getElementById("place_phone_anim").hidden = true;
         document.getElementById("tag_result").hidden = false;
 
-        let suspendNFC = false;
+        var suspendNFC = false;
 
-        let sensor_value = 8770150; // bit
-        let tare = 8680000; // bit
-        let sensibility = 0.0004768; // bit/N
-        let mass = 0; // kg
-        let gravity = 9.81; // N/kg
+        var sensor_value = 8770150; // bit
+        var tare = 8680000; // bit
+        var sensibility = 0.0004768; // bit/N
+        var mass = 0; // kg
+        var gravity = 9.81; // N/kg
 
         if ('NDEFReader' in window) {
 
