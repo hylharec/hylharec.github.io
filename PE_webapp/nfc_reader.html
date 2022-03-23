@@ -78,8 +78,6 @@
 
             async function startScanning(){
                 const ndef = new NDEFReader();
-                
-                await ndef.scan();
 
                 ndef.scan().then(() => {
                     ndef.onreadingerror = () => {
@@ -100,8 +98,6 @@
                     /// Something wrong with hardware
                     document.getElementById("log").innerHTML = "Hardware error !";
                 });
-
-                setTimeout(startScanning, 200);
             }
 
             function handleResults(event) {
