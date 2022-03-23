@@ -161,6 +161,8 @@
             sensibility = document.querySelector("#sensibilite").value;
         }
         document.querySelector("#sensibilite").onkeypress = "this.onchange();"
+        document.querySelector("#sensibilite").onpaste    = "this.onchange();"
+        document.querySelector("#sensibilite").oninput    = "this.onchange();"
 
         // Tare with last sensor_value
         document.querySelector("#button_tare").onclick = event => {
