@@ -79,6 +79,8 @@
             async function startScanning(){
                 const ndef = new NDEFReader();
 
+                
+
                 ndef.scan().then(() => {
                     ndef.onreadingerror = () => {
                         // Could not scan a tag, try another
@@ -122,12 +124,17 @@
                     }*/
                     //document.getElementById("messages").innerHTML += " : ";
 
-                    document.getElementById("log").innerHTML = "Reading tag...";
+                    document.getElementById("log").innerHTML = "";
+
+                    //document.getElementById("log").innerHTML = "Reading tag...";
+                    
                     // Read sensor value from received ndef message 
                     sensor_value = 0;
                     for( let i = 0 ; i < record.data.buffer.byteLength ; i++) {
                         sensor_value = sensor_value << 8;
                         sensor_value += record.data.getUint8(i);
+
+                        document.getElementById("log").innerHTML += record.data.getUint8(i).toString(16) + " ";
                     }
                     
                     // Compute mass
