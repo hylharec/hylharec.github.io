@@ -137,12 +137,14 @@
                         document.getElementById("log").innerHTML += record.data.getUint8(i).toString(16) + " ";
                     }
                     
-                    // Compute mass
-                    mass = (sensor_value - tare) * sensibility / gravity;
-                    mass = Math.round(mass*1000)/1000;
-                    
-                    // show mass in kg on page
-                    document.getElementById("weight").innerHTML = mass.toString(10) + " kg";
+                    if(sensor_value != 0) {
+                        // Compute mass
+                        mass = (sensor_value - tare) * sensibility / gravity;
+                        mass = Math.round(mass*1000)/1000;
+                        
+                        // show mass in kg on page
+                        document.getElementById("weight").innerHTML = mass.toString(10) + " kg";
+                    }
                 }
                 // =====================================================================================================================
                 // =====================================================================================================================
@@ -152,11 +154,13 @@
         // Function called every 500 ms to update the mass according to last sensibility and tare (even if no new sensor value)
         async function virtual_sensor_read() {
             // Compute mass
-            mass = (sensor_value - tare) * sensibility / gravity;
-            mass = Math.round(mass*1000)/1000;
-            
-            // show mass in kg on page
-            document.getElementById("weight").innerHTML = mass.toString(10) + " kg";
+            if(sensor_value != 0) {
+                mass = (sensor_value - tare) * sensibility / gravity;
+                mass = Math.round(mass*1000)/1000;
+                
+                // show mass in kg on page
+                document.getElementById("weight").innerHTML = mass.toString(10) + " kg";
+            }
 
             setTimeout(virtual_sensor_read, 500);
         }
