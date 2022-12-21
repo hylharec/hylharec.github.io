@@ -5,27 +5,7 @@
     <link>http://hylharec.github.io/</link>
     <description>Recent content on Hylharec&#39;s Workshop</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Sat, 12 Jun 2021 13:59:29 +0200</lastBuildDate><atom:link href="http://hylharec.github.io/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Ressources Pour Le Déplacement Contrôlé D&#39;un Robot</title>
-      <link>http://hylharec.github.io/posts/ressources-pour-le-d%C3%A9placement-contr%C3%B4l%C3%A9-dun-robot/</link>
-      <pubDate>Sat, 12 Jun 2021 13:59:29 +0200</pubDate>
-      
-      <guid>http://hylharec.github.io/posts/ressources-pour-le-d%C3%A9placement-contr%C3%B4l%C3%A9-dun-robot/</guid>
-      <description>Resources RCVA - asservissement polaire https://www.rcva.fr/10-ans-dexperience/9/
-Modules d&amp;rsquo;asservissement clefs en main - LM629 https://www.ti.com/product/LM629
-- MKS SERVO57B </description>
-    </item>
-    
-    <item>
-      <title>SimpleFOCproject   Une Carte Et Une Bibliothèque Pour Controler Un Moteur BLDC Avec Du FOC</title>
-      <link>http://hylharec.github.io/posts/simplefocproject-une-carte-et-une-biblioth%C3%A8que-pour-controler-un-moteur-bldc-avec-du-foc/</link>
-      <pubDate>Sun, 11 Apr 2021 14:06:25 +0200</pubDate>
-      
-      <guid>http://hylharec.github.io/posts/simplefocproject-une-carte-et-une-biblioth%C3%A8que-pour-controler-un-moteur-bldc-avec-du-foc/</guid>
-      <description></description>
-    </item>
-    
+    <lastBuildDate>Sun, 11 Apr 2021 13:59:19 +0200</lastBuildDate><atom:link href="http://hylharec.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>TinyMovr   Un Mini Controleur De Moteur BLDC</title>
       <link>http://hylharec.github.io/posts/tinymovr-un-mini-controleur-de-moteur-bldc/</link>
